@@ -461,6 +461,7 @@ https://github.com/pentestmonkey/unix-privesc-check
 find /-name *config*.php
 /var/www/html/sites/default/settings.php #Drupal
 grep -r -i -E "user|pass|auth|key|db|database"
+/var/www/html/wp-config.php
 ```
 
 ### SUDO
