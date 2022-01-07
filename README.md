@@ -383,12 +383,19 @@ base32 --decode "MFZG233VOI5FG2DJMVWGIQBRGIZQ===="
  
 # Privilege escalation
 https://gtfobins.github.io
+
 https://book.hacktricks.xyz/linux-unix/privilege-escalation
+
 https://github.com/pha5matis/Pentesting-Guide/blob/master/privilege_escalation_-_linux.md
+
 https://github.com/carlospolop/hacktricks/tree/master/linux-unix/privilege-escalation
+
 https://github.com/Tib3rius/Pentest-Cheatsheets/blob/master/privilege-escalation/linux/linux-examples.rst
+
 https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Linux%20-%20Privilege%20Escalation.md
+
 https://payatu.com/guide-linux-privilege-escalation #MySQL UDF Dynamic Library
+
 https://academy.hackthebox.com/course/preview/linux-privilege-escalation/introduction-to-linux-privilege-escalation
 
 ### Local exploits
