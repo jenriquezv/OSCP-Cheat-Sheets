@@ -574,6 +574,7 @@ ls -la /usr/local/sbin/cron-logrotate.sh
 grep "CRON" /var/log/cron.log
 
 ps -aux | more
+funny@funbox:/var/log$ cat syslog | grep backup
 ```
 ```bash
 #!/bin/bash
