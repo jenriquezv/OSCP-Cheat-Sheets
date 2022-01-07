@@ -144,7 +144,7 @@ https://github.com/NoorQureshi/WPSeku-1
 ```bash
 wpscan --url <URL> --enumerate p
 wpscan --url  http://<IP>/wordpress/ --rua -e ap,u
-
+wpscan --url <URL> --passwords ../../rockyou.txt
 python wpseku.py --target http://192.168.149.123/wordpress
 
 wfuzz -c -t 500 --hc=404 -w /opt/SecLists/Discovery/Web-Content/CMS/wp-plugins.fuzz.txt  http://<IP>/FUZZ
@@ -255,6 +255,9 @@ ssh -i id_rsa tom@192.168.74.107
 
 grep -r -l "Welcome to SSH" 2>/dev/null
 ls -l /etc/update-motd.d/00-header
+
+id_rsa to VM victim authorized 
+
 ```
 
 ### http SHELLSOCK
