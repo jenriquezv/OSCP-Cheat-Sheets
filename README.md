@@ -374,7 +374,7 @@ user@host:~$ vim
 :set shell=/bin/sh
 :shell
 
-$ /bin/bash
+ssh <USER>@<IP> -t "bash --noprofile"
 ```
 
 ### Recon
