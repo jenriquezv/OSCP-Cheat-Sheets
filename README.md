@@ -563,6 +563,7 @@ https://github.com/DominicBreuker/pspy/releases/download/v1.2.0/pspy64s
 Check writables
 ```bash
 cat /etc/crontab 
+crontab -u <user> -l
 ls -alh /var/spool/cron
 ls -al /etc/ | grep cron
 ls -al /etc/cron*
