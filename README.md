@@ -104,7 +104,7 @@ enum4linux -u 'guest' -p '' -a <IP>
 ### http
 ```bash
 curl -s -i -k https://<IP>
-curl -L <URL>
+curl -L <URL> # Code 302
 curl -i <URL>
 curl -kv -x <PROXY> <URL>
 curl --user admin:admin <URL>/system/config/config_inc.php.sample
@@ -167,7 +167,11 @@ binwalk -e save.zip
 ```
 
 ### http bypass
+
+https://portswigger.net/bappstore/ae2611da3bbc4687953a1f4ba6a4e04c
+https://medium.com/r3d-buck3t/bypass-ip-restrictions-with-burp-suite-fb4c72ec8e9c
 HTTP/1.0 403 Forbidden --> X-Forwarded-for: localhost
+
 ```shell
 POST /administration/upload/ HTTP/1.1
 Host: 192.168.86.138
