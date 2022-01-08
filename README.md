@@ -127,6 +127,7 @@ python3 /opt/dirsearch/dirsearch.py -u <URL> -w /usr/share/seclists/Discovery/We
 ```bash
 gobuster -u <URL> -t 50 -w /usr/share/dirb/wordlists/big.txt -x .php,.html,.txt -r 
 gobuster dir -u <URL> -w /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt -k #https
+/wordlists/seclists/Discovery/Web-Content/raft-large-words.txt
 ```
 ```bash
 wfuzz -c -t 500 --hc=404 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt http://<IP>/FUZZ
