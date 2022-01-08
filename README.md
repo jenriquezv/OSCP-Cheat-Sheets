@@ -169,6 +169,7 @@ binwalk -e save.zip
 ### http bypass
 
 https://portswigger.net/bappstore/ae2611da3bbc4687953a1f4ba6a4e04c
+
 https://medium.com/r3d-buck3t/bypass-ip-restrictions-with-burp-suite-fb4c72ec8e9c
 HTTP/1.0 403 Forbidden --> X-Forwarded-for: localhost
 
