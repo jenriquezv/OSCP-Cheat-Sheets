@@ -182,7 +182,7 @@ Content-Type: multipart/form-data; boundary=---------------------------101313570
 Content-Length: 378
 
 -----------------------------10131357035256004441892031456
-Content-Disposition: form-data; name="document"; filename="webshell.php.png"
+Content-Disposition: form-data; name="document"; filename="webshell.php"
 Content-Type: image/png
 
 GIF89:
