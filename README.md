@@ -117,20 +117,24 @@ nikto -h <URL> -C all
 ```
 
 ### http fuzzer directory
+/opt/dirsearch/db/dicc.txt
+/usr/share/dirb/wordlists/common.txt
+/usr/share/seclists/Discovery/Web-Content/big.txt
+/wordlists/seclists/Discovery/Web-Content/raft-large-words.txt
+/opt/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt
+/usr/share/seclists/Discovery/Web-Content/directory-list-2.3-big.txt
 ```bash
 dirb <URL>
 ```
 ```bash
 python3 /opt/dirsearch/dirsearch.py -u <URL> -e php,txt -x 403 --random-agents
-python3 /opt/dirsearch/dirsearch.py -u <URL> -w /usr/share/dirb/wordlists/common.txt -e php,txt,cgi,sh,txt,xml
-python3 /opt/dirsearch/dirsearch.py -u <URL> -w /usr/share/dirb/wordlists/big.txt -e php,txt
-python3 /opt/dirsearch/dirsearch.py -u <URL> -e php,txt -x 403 -w /opt/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt
-python3 /opt/dirsearch/dirsearch.py -u <URL> -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-big.txt -e php,txt,cgi
+python3 /opt/dirsearch/dirsearch.py -u <URL> -e php,txt,cgi,sh,txt,xml -f -w /usr/share/wordlists/dirb/big.txt	# Force extension -f
+python3 /opt/dirsearch/dirsearch.py -u <URL> -w /usr/share/dirb/wordlists/common.txt -E -f
 ```
 ```bash
-gobuster -u <URL> -t 50 -w /usr/share/dirb/wordlists/big.txt -x .php,.html,.txt -r 
+gobuster -u <URL> -t 50 -w /usr/share/seclists/Discovery/Web-Content/big.txt -x php
+gobuster -u <URL> -t 50 -w /usr/share/dirb/wordlists/big.txt -x .php -r 	# Follow redirect
 gobuster dir -u <URL> -w /opt/SecLists/Discovery/Web-Content/raft-small-directories.txt -k #https
-/wordlists/seclists/Discovery/Web-Content/raft-large-words.txt
 ```
 ```bash
 wfuzz -c -t 500 --hc=404 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt http://<IP>/FUZZ
