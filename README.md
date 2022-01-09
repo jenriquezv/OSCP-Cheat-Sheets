@@ -610,6 +610,8 @@ find / -path /proc -prune -o -type f -perm -o+w 2>/dev/null
 find / -writable -type d 2>/dev/null
 find / -perm -222 -type d 2>/dev/null
 find / -perm -o w -type d 2>/dev/null
+	
+find / -readable -type f 2>/dev/null  | grep -v sys | grep -v etc | grep -v usr | grep -v snap | grep -v proc | grep -v lib | grep -v boot | grep -v var | grep -v bin | grep -v run | more
 ```
 
 ### Scheduled tasks
