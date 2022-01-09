@@ -21,6 +21,9 @@ ping <IP> -R
 ping <IP> -c 3 # View TTL
 ```
 ```bash
+for f in *; do ls -la $f; done
+```
+```bash
 lsoft -i:53
 ```
 ### nmap
