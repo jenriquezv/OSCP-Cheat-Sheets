@@ -230,6 +230,7 @@ Wordpress
 1. Insert code PHP in Edit Plugins
 2. Appearance --> Template Editor --> Template 404 --> "insert code" --> <url>?p=404
 3. Add Plugin --> uploads
+4. AdRotate --> Manage Media --> Upload new banner --> shell.php.zip  # http://loly.lc/wordpress/wp-content/banners/php-reverse-shell.php
 Review /uploads and write perms
 	
 ```bash
