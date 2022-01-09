@@ -226,6 +226,7 @@ PHP filter # RCE
 Wordpress
 1. Insert code PHP in Edit Plugins
 2. Appearance --> Template Editor --> Template 404 --> "insert code" --> <url>?p=404
+3. Add Plugin --> uploads
 ```bash
 root@kali# cat hash_wp
 $P$BE8LMdNTNUfpD5w3h5q2DnGGalSHcY1
