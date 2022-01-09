@@ -174,10 +174,6 @@ hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP> http-form-post "/wordpre
 droopescan scan drupal -u <url>
 ```
 
-```bash
-binwalk -e save.zip 
-```
-
 ### http bypass
 
 https://portswigger.net/bappstore/ae2611da3bbc4687953a1f4ba6a4e04c
@@ -444,6 +440,13 @@ echo "S0tCg==" | base64 -d
 base32 --decode "MFZG233VOI5FG2DJMVWGIQBRGIZQ===="
 ```
  
+```bash
+binwalk -e save.zip 
+steghide --extract -sf haclabs.jpeg -p harder
+https://github.com/StefanoDeVuono/steghide
+```
+
+	
 # Privilege escalation
 https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/
 	
