@@ -263,6 +263,10 @@ unshadow passwd shadow > crack
 john --wordlist=/usr/share/wordlists/rockyou.txt crack 
 ```
 ```bash
+# Hash Wordpress 
+john hash -w /usr/share/wordlists/rockyou.txt  --format=phpass
+```
+```bash
 hashcat -m 500 hash.txt /usr/share/wordlists/rockyou.txt --force # $1$ MD5
 ```
 ```bash
