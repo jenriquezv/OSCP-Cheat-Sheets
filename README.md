@@ -402,7 +402,7 @@ xterm
 export TERM=xterm-256color
 export TERM=xterm
 export SHELL=bash
-stty rows 26 columns 211
+stty rows 17 columns 144
 ```
 stty -a # get rows and colummns
 
