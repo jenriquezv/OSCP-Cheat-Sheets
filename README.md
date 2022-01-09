@@ -118,10 +118,15 @@ nikto -h <URL> -C all
 
 ### http fuzzer directory
 /opt/dirsearch/db/dicc.txt
+
 /usr/share/dirb/wordlists/common.txt
+
 /usr/share/seclists/Discovery/Web-Content/big.txt
+
 /wordlists/seclists/Discovery/Web-Content/raft-large-words.txt
+
 /opt/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt
+
 /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-big.txt
 ```bash
 dirb <URL>
