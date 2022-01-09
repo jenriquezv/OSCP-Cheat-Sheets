@@ -445,6 +445,8 @@ base32 --decode "MFZG233VOI5FG2DJMVWGIQBRGIZQ===="
 ```
  
 # Privilege escalation
+https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/
+	
 https://gtfobins.github.io
 
 https://book.hacktricks.xyz/linux-unix/privilege-escalation
