@@ -235,9 +235,10 @@ PHP filter # RCE
 Wordpress
 1. Insert code PHP in Edit Plugins
 2. Appearance --> Template Editor --> Template 404 --> "insert code" --> <url>?p=404
-3. Add Plugin --> uploads
-4. AdRotate --> Manage Media --> Upload new banner --> shell.php.zip  # http://loly.lc/wordpress/wp-content/banners/php-reverse-shell.php
-Review /uploads and write perms
+3. Add Plugin --> upload # Upload zip, note: download from wordpress and edit with php shell
+4. AdRotate --> Manage Media --> Upload new banner --> shell.php.zip  
+# http://loly.lc/wordpress/wp-content/banners/php-reverse-shell.php
+Review "/uploads" and write perms to shell from mysql or db
 
 Generate pwd
 https://www.useotools.com/es/wordpress-password-hash-generator/output
