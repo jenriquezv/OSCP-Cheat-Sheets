@@ -328,6 +328,11 @@ nmap -sV -Pn -n --script=http-shellshock.nse --script-args uri=/cgi-bin/calendar
 
 ```
 
+### Tomcat AJP Connector tcp/8009  - Ghostcat
+https://www.chaitin.cn/en/ghostcat
+
+https://github.com/00theway/Ghostcat-CNVD-2020-10487
+	
 ### IRC
 https://book.hacktricks.xyz/pentesting/pentesting-irc
 ```bash
