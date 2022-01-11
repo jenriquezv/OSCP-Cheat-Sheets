@@ -275,7 +275,7 @@ john --wordlist=/usr/share/wordlists/rockyou.txt crack
 ```
 ```bash
 # Hash Wordpress 
-john hash -w /usr/share/wordlists/rockyou.txt  --format=phpass
+john hash --wordlist=/usr/share/wordlists/rockyou.txt  --format=phpass
 hashcat.exe -O -m 400 -a 0 -o crack.txt hash.txt rockyou.txt
 ```
 ```bash
