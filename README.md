@@ -8,8 +8,6 @@ https://blog.adithyanak.com/oscp-preparation-guide/linux-privilege-escalation \
 https://hausec.com/pentesting-cheatsheet/#_Toc475368980 \
 https://guide.offsecnewbie.com/5-sql \
 
-Polkit 
-https://www.hackingarticles.in/linux-privilege-escalation-polkit-cve-2021-3560/
 
 # Recon
 
@@ -753,6 +751,11 @@ jose@midnight:/tmp$ echo "chmod u+s /bin/bash" > service
 jose@midnight:/tmp$ chmod +x service
 jose@midnight:/tmp$ /usr/bin/status
 ```
+
+PWNKIT CVE-2021-4034
+https://github.com/berdav/CVE-2021-4034
+https://www.hackingarticles.in/linux-privilege-escalation-polkit-cve-2021-3560/
+	
 	
 ### Cipher
 https://www.dcode.fr/cipher-identifier
